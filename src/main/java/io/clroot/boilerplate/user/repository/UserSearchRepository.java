@@ -1,5 +1,6 @@
 package io.clroot.boilerplate.user.repository;
 
+import io.clroot.boilerplate.user.model.QUser;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -8,7 +9,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import io.clroot.boilerplate.common.repository.SearchRepository;
 import io.clroot.boilerplate.user.dto.UserSearchDto;
-import io.clroot.boilerplate.user.model.QUser;
 import io.clroot.boilerplate.user.model.User;
 import lombok.RequiredArgsConstructor;
 
