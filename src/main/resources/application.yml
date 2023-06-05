@@ -14,11 +14,15 @@ spring:
   h2:
     console:
       enabled: false
+      path: /h2-console
   data:
     web.pageable:
       default-page-size: 30
       max-page-size: 1000
       one-indexed-parameters: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 logging:
   level:
     root: info
