@@ -16,7 +16,6 @@ public class OtherAptRandomApplicationDto extends HousingApplicationDto{
 
     public OtherAptRandomApplicationDto(OtherAptRandomApplication source) {
         super(source);
-        setApplicationType("OtherAptRandom");
         this.executorCompany = source.getExecutorCompany();
         this.otherAptRandomSchedule = source.getOtherAptRandomSchedule();
     }

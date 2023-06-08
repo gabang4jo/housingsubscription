@@ -2,6 +2,7 @@ package io.clroot.boilerplate.common.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
+import java.util.Random;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -28,6 +29,13 @@ public enum Region  {
     CHUNGBUK("충북");
 
     private  String value;
+
+    private static final Random PRNG = new Random();
+
+    public static Region randomDirection()  {
+        Region[] directions = values();
+        return directions[PRNG.nextInt(directions.length)];
+    }
 
     Region(String value){
         this.value = value;

@@ -30,6 +30,9 @@ public class ApartmentSchedule {
     public ApartmentSchedule(LocalDateTime specialSupplyDate,LocalDateTime firstPriorityApplicationDate,LocalDateTime secondPriorityApplicationDate){
         checkArgument(firstPriorityApplicationDate != null, "firstPriorityApplicationDate must be provided");
         checkArgument(secondPriorityApplicationDate != null, "secondPriorityApplicationDate must be provided");
+        this.firstPriorityApplicationDate = firstPriorityApplicationDate;
+        this.secondPriorityApplicationDate = secondPriorityApplicationDate;
+        this.specialSupplyDate = specialSupplyDate;
     }
 
 

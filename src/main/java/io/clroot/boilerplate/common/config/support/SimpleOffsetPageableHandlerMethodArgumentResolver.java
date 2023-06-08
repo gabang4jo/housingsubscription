@@ -15,17 +15,17 @@ public class SimpleOffsetPageableHandlerMethodArgumentResolver implements Handle
 
   private static final int DEFAULT_SIZE = 10;
 
-  private final String offsetParam;
+  private final String pageParam;
 
-  private final String limitParam;
+  private final String sizeParam;
 
   public SimpleOffsetPageableHandlerMethodArgumentResolver() {
-    this("offset", "limit");
+    this("page", "size");
   }
 
-  public SimpleOffsetPageableHandlerMethodArgumentResolver(String offsetParam, String limitParam) {
-    this.offsetParam = offsetParam;
-    this.limitParam = limitParam;
+  public SimpleOffsetPageableHandlerMethodArgumentResolver(String pageParam, String sizeParam) {
+    this.pageParam = pageParam;
+    this.sizeParam = sizeParam;
   }
 
   @Override
@@ -35,8 +35,8 @@ public class SimpleOffsetPageableHandlerMethodArgumentResolver implements Handle
 
   @Override
   public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-    String pageString = webRequest.getParameter(offsetParam);
-    String sizeString = webRequest.getParameter(limitParam);
+    String pageString = webRequest.getParameter(pageParam);
+    String sizeString = webRequest.getParameter(sizeParam);
 
     int page = toInt(pageString, DEFAULT_PAGE);
     int size = toInt(sizeString, DEFAULT_SIZE);
@@ -44,7 +44,7 @@ public class SimpleOffsetPageableHandlerMethodArgumentResolver implements Handle
     if (page < 0) {
       page = DEFAULT_PAGE;
     }
-    if (size < 1 || size > 5) {
+    if (size < 1 || size > 20) {
       size = DEFAULT_SIZE;
     }
 

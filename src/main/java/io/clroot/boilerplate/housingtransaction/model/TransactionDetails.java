@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class TransactionDetails {
 
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private String price;
 
     @Column(name = "area", nullable = false)
     private Double area;
@@ -21,7 +21,7 @@ public class TransactionDetails {
     private Integer constructionYear;
 
     @Column(name = "transaction_date", nullable = false)
-    private LocalDateTime transactionDate;
+    private String transactionDate;
 
     @Override
     public String toString() {

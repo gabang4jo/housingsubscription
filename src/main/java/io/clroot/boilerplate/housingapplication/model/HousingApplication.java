@@ -1,4 +1,6 @@
 package io.clroot.boilerplate.housingapplication.model;
+import static com.google.common.base.Preconditions.checkArgument;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.clroot.boilerplate.common.converter.RegionConverter;
@@ -18,8 +20,11 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import java.util.Objects;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -38,11 +43,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 })
 public class HousingApplication extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
     @Column(name = "region",nullable = false)
     @Convert(converter = RegionConverter.class)
     private Region region;
@@ -53,6 +53,14 @@ public class HousingApplication extends BaseEntity {
     @Embedded
     private Schedule schedule;
 
+    public HousingApplication(Region region, HouseInfo houseInfo, Schedule schedule) {
+        checkArgument(region != null, "region must be provided");
+        checkArgument(houseInfo != null, "houseInfo must be provided");
+        checkArgument(schedule != null, "schedule must be provided");
+        this.region = region;
+        this.houseInfo = houseInfo;
+        this.schedule = schedule;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -74,7 +82,7 @@ public class HousingApplication extends BaseEntity {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("id", id)
+            .append("id", getId())
             .append("region",region)
             .append("houseInfo",houseInfo)
             .append("schedule",schedule)

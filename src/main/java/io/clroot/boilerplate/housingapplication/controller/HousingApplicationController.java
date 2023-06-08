@@ -6,6 +6,7 @@ import com.electronwill.nightconfig.core.conversion.Path;
 import io.clroot.boilerplate.common.config.support.Pageable;
 import io.clroot.boilerplate.common.config.support.SimplePageRequest;
 import io.clroot.boilerplate.common.controller.ApiResult;
+import io.clroot.boilerplate.common.exception.NotFoundException;
 import io.clroot.boilerplate.housingapplication.dto.ApartmentApplicationDto;
 import io.clroot.boilerplate.housingapplication.dto.HousingApplicationDto;
 import io.clroot.boilerplate.housingapplication.dto.NonApartmentApplicationDto;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +39,7 @@ public class HousingApplicationController {
     private final HousingApplicationService housingApplicationService;
 
 
-    @GetMapping("/")
+    @GetMapping("/calendar")
     public ApiResult<List<HousingApplicationDto>> getApplicationByMonth(
         @RequestParam String year, @RequestParam String month) {
         return OK(
@@ -60,7 +62,7 @@ public class HousingApplicationController {
             return OK(new OtherAptRandomApplicationDto((OtherAptRandomApplication) application));
         }
 
-        throw new RuntimeException("Unexpected type of application");
+        throw new NotFoundException("Housing Applications Id is not found");
     }
 
 
@@ -73,7 +75,7 @@ public class HousingApplicationController {
 
     @GetMapping("/non-apartment")
     public ApiResult<Page<NonApartmentApplicationDto>> getNonApartmentApplications(
-        SimplePageRequest pageable) {
+        Pageable pageable) {
 
         return OK(
             housingApplicationService.getNonApartmentApplications(pageable.page(),
@@ -92,7 +94,7 @@ public class HousingApplicationController {
 
     @GetMapping("/apartment/search")
     public ApiResult<Page<ApartmentApplicationDto>> searchApartmentApplications(
-        Pageable pageable, ApartmentApplicationSearchDto searchDto) {
+        Pageable pageable, @RequestBody ApartmentApplicationSearchDto searchDto) {
         return OK(housingApplicationService.searchApartmentApplication(searchDto, pageable.page(),
             pageable.size()).map(ApartmentApplicationDto::new));
         // return results as needed
@@ -100,7 +102,7 @@ public class HousingApplicationController {
 
     @GetMapping("/non-apartment/search")
     public ApiResult<Page<NonApartmentApplicationDto>> searchNonApartmentApplications(
-        Pageable pageable, NonApartmentApplicationSearchDto searchDto) {
+        Pageable pageable,@RequestBody NonApartmentApplicationSearchDto searchDto) {
         return OK(
             housingApplicationService.searchNonApartmentApplication(searchDto, pageable.page(),
                 pageable.size()).map(NonApartmentApplicationDto::new));
@@ -109,7 +111,7 @@ public class HousingApplicationController {
 
     @GetMapping("/other-apt-random/search")
     public ApiResult<Page<OtherAptRandomApplicationDto>> searchOtherAptRandomApplications(
-        Pageable pageable, OtherAptRandomApplicationSearchDto searchDto) {
+        Pageable pageable,@RequestBody OtherAptRandomApplicationSearchDto searchDto) {
         return OK(
             housingApplicationService.searchOtherRandomAptApplication(searchDto, pageable.page(),
                 pageable.size()).map(OtherAptRandomApplicationDto::new));

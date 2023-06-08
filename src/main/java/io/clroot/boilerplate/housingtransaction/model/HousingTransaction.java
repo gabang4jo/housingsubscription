@@ -1,4 +1,5 @@
 package io.clroot.boilerplate.housingtransaction.model;
+import io.clroot.boilerplate.common.model.BaseEntity;
 import io.clroot.boilerplate.common.model.HouseInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -15,12 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Getter
 @Entity
 @Table(name = "housing_transaction")
-public class HousingTransaction {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class HousingTransaction extends BaseEntity {
 
     @Embedded
     private HouseInfo houseInfo;
@@ -52,7 +48,7 @@ public class HousingTransaction {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("id",id)
+            .append("id",getId())
             .append("houseInfo",houseInfo)
             .append("cityDistrict",cityDistrict)
             .append("transactionDetails",transactionDetails)

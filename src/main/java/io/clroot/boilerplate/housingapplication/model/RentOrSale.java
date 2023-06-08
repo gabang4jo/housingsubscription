@@ -2,6 +2,7 @@ package io.clroot.boilerplate.housingapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
+import java.util.Random;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -18,6 +19,13 @@ public enum RentOrSale {
 
     RentOrSale(String value) {
         this.value = value;
+    }
+
+    private static final Random PRNG = new Random();
+
+    public static RentOrSale randomDirection()  {
+        RentOrSale[] directions = values();
+        return directions[PRNG.nextInt(directions.length)];
     }
 
     @Override
