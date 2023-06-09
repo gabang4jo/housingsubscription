@@ -3,6 +3,7 @@ package io.clroot.boilerplate.common.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

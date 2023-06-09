@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
@@ -45,10 +46,11 @@ public class HousingApplicationRepositoryImpl implements HousingApplicationRepos
 
         return jpaQueryFactory
             .selectFrom(qHousingApplication)
-            .where(qHousingApplication.schedule.startDate.loe(startOfMonth)
-                .and(qHousingApplication.schedule.endDate.goe(endOfMonth)))
+            .where(qHousingApplication.schedule.startDate.lt(endOfMonth)
+                .and(qHousingApplication.schedule.endDate.gt(startOfMonth)))
             .fetch();
     }
+
 
     @Override
     public Page<ApartmentApplicationDto> findAllApartmentApplication(Pageable pageable) {
@@ -60,12 +62,10 @@ public class HousingApplicationRepositoryImpl implements HousingApplicationRepos
         List<ApartmentApplicationDto> content = list.stream()
             .map(ApartmentApplicationDto::new).toList();
 
-        JPAQuery<Long> countQuery = jpaQueryFactory.select(qApartmentApplication.count())
-            .from(qApartmentApplication)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize());
+        Long totalCount = jpaQueryFactory.select(qApartmentApplication.count())
+            .from(qApartmentApplication).fetchOne();
 
-        return PageableExecutionUtils.getPage(content,pageable,countQuery :: fetchOne);
+        return new PageImpl<>(content, pageable, totalCount);
 
 
     }
@@ -81,12 +81,10 @@ public class HousingApplicationRepositoryImpl implements HousingApplicationRepos
         List<NonApartmentApplicationDto> content = list.stream()
             .map(NonApartmentApplicationDto::new).toList();
 
-        JPAQuery<Long> countQuery = jpaQueryFactory.select(qNonApartmentApplication.count())
-            .from(qNonApartmentApplication)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize());
+        Long totalCount= jpaQueryFactory.select(qNonApartmentApplication.count())
+            .from(qNonApartmentApplication).fetchOne();
 
-        return PageableExecutionUtils.getPage(content,pageable,countQuery :: fetchOne);
+        return new PageImpl<>(content, pageable, totalCount);
     }
 
     @Override
@@ -99,11 +97,9 @@ public class HousingApplicationRepositoryImpl implements HousingApplicationRepos
         List<OtherAptRandomApplicationDto> content = list.stream()
             .map(OtherAptRandomApplicationDto::new).toList();
 
-        JPAQuery<Long> countQuery = jpaQueryFactory.select(qOtherAptRandomApplication.count())
-            .from(qOtherAptRandomApplication)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize());
+        Long totalCount= jpaQueryFactory.select(qOtherAptRandomApplication.count())
+            .from(qOtherAptRandomApplication).fetchOne();
 
-        return PageableExecutionUtils.getPage(content,pageable,countQuery :: fetchOne);
+        return new PageImpl<>(content, pageable, totalCount);
     }
 }

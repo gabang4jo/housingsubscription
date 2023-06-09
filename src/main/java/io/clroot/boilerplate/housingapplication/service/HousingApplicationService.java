@@ -54,7 +54,7 @@ public class HousingApplicationService {
             month = DEFAULT_MONTH;
         }
 
-        int year = toInt(strMonth, DEFAULT_YEAR);
+        int year = toInt(strYear, DEFAULT_YEAR);
         if (year < 2021 || year > 2023) {
             year = DEFAULT_MONTH;
         }
@@ -120,14 +120,14 @@ public class HousingApplicationService {
     }
 
     private int checkSize(int size) {
-        return (size < 1 || size > 10) ? 10 : size;
+        return (size < 1 || size > 20) ? 10 : size;
     }
 
 
     public void validateYearMonth(int startYear, int startMonth, int endYear, int endMonth) {
-        checkArgument(startYear >= 2021 && startYear <= 2022, "Invalid start year: " + startYear);
+        checkArgument(startYear >= 2022 && startYear <= 2023, "Invalid start year: " + startYear);
         checkArgument(startMonth >= 1 && startMonth <= 12, "Invalid start month: " + startMonth);
-        checkArgument(endYear >= 2021 && endYear <= 2022, "Invalid end year: " + endYear);
+        checkArgument(endYear >= 2022 && endYear <= 2023, "Invalid end year: " + endYear);
         checkArgument(endMonth >= 1 && endMonth <= 12, "Invalid end month: " + endMonth);
 
         LocalDateTime startDateTime = LocalDateTime.of(startYear, startMonth, 1, 0, 0, 0);

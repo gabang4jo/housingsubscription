@@ -1,7 +1,4 @@
 package io.clroot.boilerplate.housingtransaction.dto;
-
-import static org.springframework.beans.BeanUtils.copyProperties;
-
 import io.clroot.boilerplate.common.model.HouseInfo;
 import io.clroot.boilerplate.housingtransaction.model.HousingTransaction;
 import io.clroot.boilerplate.housingtransaction.model.TransactionDetails;
@@ -23,7 +20,10 @@ public class HousingTransactionDto {
 
 
     public HousingTransactionDto(HousingTransaction source){
-        copyProperties(source,this);
+        this.id = source.getId();
+        this.houseInfo = source.getHouseInfo();
+        this.cityDistrict = source.getCityDistrict();
+        this.transactionDetails = source.getTransactionDetails();
     }
 
     @Override

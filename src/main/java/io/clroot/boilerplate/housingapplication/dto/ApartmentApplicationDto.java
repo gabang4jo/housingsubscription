@@ -18,7 +18,6 @@ public class ApartmentApplicationDto extends HousingApplicationDto{
 
     public ApartmentApplicationDto(ApartmentApplication source) {
         super(source);
-        setApplicationType("Apartment");
         this.housingType = source.getHousingType();
         this.rentOrSale = source.getRentOrSale();
         this.constructorCompany = source.getConstructorCompany();

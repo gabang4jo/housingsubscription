@@ -21,7 +21,6 @@ public class NonApartmentApplicationDto extends HousingApplicationDto {
 
     public NonApartmentApplicationDto(NonApartmentApplication source){
         super(source);
-        setApplicationType("NonApartment");
         this.nonApartmentType = source.getNonApartmentType();
         this.executorCompany = source.getExecutorCompany();
     }

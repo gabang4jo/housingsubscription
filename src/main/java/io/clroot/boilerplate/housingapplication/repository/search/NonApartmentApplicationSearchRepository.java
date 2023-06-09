@@ -31,14 +31,13 @@ public class NonApartmentApplicationSearchRepository extends SearchRepository<No
     protected JPAQuery<NonApartmentApplication> searchQuery(
         NonApartmentApplicationSearchDto search) {
         LocalDateTime startDateTime = getStartDateTime(search.startYear(), search.startMonth());
-        LocalDateTime endDateTime = getEndDateTime(search.startYear(), search.startMonth());
+        LocalDateTime endDateTime = getEndDateTime(search.endYear(), search.endMonth());
 
         return jpaQueryFactory.selectFrom(qNonApartmentApplication)
             .where(containRegion(search.region()),
                 containNonApartmentType(search.nonApartmentType()),
                 containExecutorCompany(search.executorCompany()),
-                qNonApartmentApplication.schedule.startDate.loe(endDateTime)
-                    .and(qNonApartmentApplication.schedule.endDate.goe(startDateTime))
+                qNonApartmentApplication.schedule.startDate.between(startDateTime,endDateTime)
                 );
     }
 
@@ -62,20 +61,20 @@ public class NonApartmentApplicationSearchRepository extends SearchRepository<No
 
     public LocalDateTime getStartDateTime(Integer startYear, Integer startMonth) {
         if (startYear == null || startMonth == null) {
-            return null;
+            return LocalDateTime.of(2023, 1, 1, 0, 0, 0); // far past
         }
 
-        checkArgument(startYear >= 2021 && startYear <= 2022, "Invalid year: " + startYear);
+        checkArgument(startYear >= 2022 && startYear <= 2023, "Invalid year: " + startYear);
         checkArgument(startMonth >= 1 && startMonth <= 12, "Invalid Month: " + startMonth);
         return LocalDateTime.of(startYear, startMonth, 1, 0, 0, 0);
     }
 
     public LocalDateTime getEndDateTime(Integer endYear, Integer endMonth) {
         if (endYear == null || endMonth == null) {
-            return null;
+            return LocalDateTime.of(2023, 5, 31, 23, 59, 59); // far future
         }
 
-        checkArgument(endYear >= 2021 && endYear <= 2022, "Invalid year: " + endYear);
+        checkArgument(endYear >= 2022 && endYear <= 2023, "Invalid year: " + endYear);
         checkArgument(endMonth >= 1 && endMonth <= 12, "Invalid Month: " + endMonth);
         // 월의 마지막 날을 구하기 위해 Month 객체를 사용합니다.
         int lastDayOfMonth = Month.of(endMonth).length(Year.isLeap(endYear));

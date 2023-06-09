@@ -3,11 +3,13 @@ package io.clroot.boilerplate.common.config.support;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+@Getter
 public class SimplePageRequest implements Pageable {
 
     private final int page;
